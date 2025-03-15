@@ -6,7 +6,11 @@ spring:
     url: jdbc:mysql://localhost:3306/mybatis
     username: root
     password: 200404
+  main:
+    banner-mode: off
 #开启mp的日志
 mybatis-plus:
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    banner: false
