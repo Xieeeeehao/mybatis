@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
+import java.util.Map;
 
 @SpringBootTest
 class MybatisApplicationTests {
@@ -44,11 +45,27 @@ class MybatisApplicationTests {
         qu.setAge(16);
 
         LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
-        wrapper.lt(null != qu.getAge2(),User::getAge,qu.getAge2());
-        wrapper.gt(null != qu.getAge(),User::getAge,qu.getAge());
+        wrapper.lt(null != qu.getAge2(),User::getAge,qu.getAge2())
+               .gt(null != qu.getAge(),User::getAge,qu.getAge());
+
         List<User> users = userMapper.selectList(wrapper);
         System.out.println(users);
 
+    }
+
+    //查询投影
+    //选择查询字段
+    @Test
+    public void testAll3() {
+//        LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
+//        wrapper.select(User::getId,User::getName,User::getAge);
+//        List<User> users = userMapper.selectList(wrapper);
+//        System.out.println(users);
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.select("count(*) as count,gender");
+        wrapper.groupBy("gender");
+        List<Map<String, Object>> list = userMapper.selectMaps(wrapper);
+        System.out.println(list);
     }
 
     //    分页功能：
