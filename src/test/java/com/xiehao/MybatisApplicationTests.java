@@ -79,4 +79,38 @@ class MybatisApplicationTests {
         System.out.println(page.getRecords());
     }
 
+    @Test
+    public void insert(){
+        User user = new User();
+        user.setAge(20);
+        user.setTel(1238);
+        user.setSex("男");
+        user.setName("kuhaha");
+        userMapper.insert(user);
+    }
+
+    @Test
+    public void selectAll(){
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+//        wrapper.eq("deleted",1);
+        List<Map<String, Object>> list = userMapper.selectMaps(wrapper);
+        System.out.println(list);
+    }
+
+    @Test
+    public void deleteByid(){
+        userMapper.deleteById("1");
+    }
+
+    @Test
+    public void updateById(){
+
+        User user = userMapper.selectById(3);
+        User user2 = userMapper.selectById(3);
+        user2.setName("888");
+        userMapper.updateById(user2);
+        user.setName("999");
+        userMapper.updateById(user);
+    }
+
 }
